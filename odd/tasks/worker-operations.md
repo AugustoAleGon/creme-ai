@@ -226,7 +226,7 @@ Scope: T2 only, implementing S2–S5 submission/QC/access/audit behavior at the 
 ## Tasks
 - T1 | S1, S7 | inline | functionally verified | Workspace/tooling, app shells, Compose, Drizzle connectivity and smoke tests; commit c14a2b1, native review explicitly declined for this candidate. Risk: item 5 (dependencies/environment).
 - T1b | S2–S4, S8 | inline | complete | Commit d0976c24df195dadfffdda439ef5c9f329defe4a. Domain schema, migrations, seed and database-seam tests; independent verification passed and native four-lens review acknowledged with no findings. No writer trigger: one dependent database unit. Risk: items 1, 4, 5 (migrations, repeat-safe seed concurrency, database tooling).
-- T2 | S2–S5, S9 | inline | complete; commit pending | Submissions, QC, permissions and audit with HTTP integration tests; commit pending. Risk: items 2, 4 (access/concurrency).
+- T2 | S2–S5, S9 | inline | complete | Commit 48d56036fc0f667a9004a1faf2d3dd91beee4919. Submissions, QC, permissions and audit with HTTP integration tests; independent verification passed and native review acknowledged with no findings. Risk: items 2, 4 (access/concurrency).
 - T3 | S2–S5 | inline | pending | Acceptance, employer decisions, readiness and scheduling with concurrency tests; commit pending. Risk: items 2, 4 (access/concurrency).
 - T4 | S3–S5 | delegated if parallel API/frontend surfaces are ready | pending | Readiness board with component tests; commit pending.
 - T5 | S1–S6 | inline plus independent verifier | pending | Final acceptance checks and submission documentation; commit pending.
@@ -379,3 +379,11 @@ Assistant scoped continuation to T1b (schema, migrations, exact seed), main, no 
 - Exact acknowledgement completed with action=acknowledged and authority=burned for lineage review-47a00df4c99c9dae. The lifecycle is closed; do not replay its START, capture or acknowledgement commands.
 - The reviewed code and tests remain unchanged, backed by 23 passing tests and independent functional verification. This entry and task-status change are passive progress metadata, structurally checked after review closure.
 - T2 is complete and staged, but not committed. Commit authorization is separate from this review grant. T3–T5 remain deferred; no push, publication or review-mode change occurred.
+
+### L19 — T2 committed and remaining scope checked (2026-11-05)
+> Let's create the commit. And give me and status of what is missing?
+
+- Created local commit 48d56036fc0f667a9004a1faf2d3dd91beee4919, feat(api): add idempotent submissions and independent QC. Its runtime code/tests match the reviewed candidate exactly; only passive closure metadata differs. No functional checks were rerun solely for committing unchanged code.
+- The two T2 business endpoints plus health exist. T3 still needs employer decisions, terms acceptance, four-gate readiness and concurrent partial-batch scheduling, with their integration tests. T4 still needs the staff readiness/booking board; the current web screen remains the health scaffold.
+- T5 still needs final acceptance/clean-start verification, completed DECISIONS.md and AI usage log, four written answers and the recording. Private repository sharing/publishing remains separately authorized work.
+- This documentation-only follow-up records the implementation commit and current gaps. Structural readback and whitespace checks apply; no runtime behavior changed. No push or publication.
