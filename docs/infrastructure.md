@@ -8,10 +8,11 @@ Use Node 22.23.4 from `.nvmrc`, pnpm 10.19.0 and a running Docker engine with Co
 pnpm install --frozen-lockfile
 cp .env.example .env
 pnpm db:up
+pnpm db:seed
 pnpm dev
 ```
 
-Copy the example only when `.env` does not already exist. Follow [README.md](../README.md) for the complete command list. Seed and migration commands are future work.
+Copy the example only when `.env` does not already exist. Follow [README.md](../README.md) for the complete command list. `pnpm db:seed` builds, applies pending migrations and seeds only an empty domain database. Replays preserve existing data; unrecognized data is refused.
 
 | Service | Default local address | Purpose |
 |---|---|---|
@@ -35,7 +36,8 @@ Turbo caches builds and static checks; development and tests are uncached. Datab
 - Compose initializes `creme` and `creme_test` by default. Initialization SQL only runs on a fresh volume.
 - If an old volume lacks the test database, create that database explicitly; do not delete the volume as a setup repair.
 - Jest disables optional Watchman integration and runs with Node experimental VM modules.
-- Planned domain concurrency tests need separate database connections, not one enclosing transaction.
+- Database foundation tests require a local host and `CREATEDB`, then create/drop only uniquely named test-owned databases. Shared test and development data are never reset.
+- The seed concurrency test runs separate CLI processes/connections. Later domain concurrency tests also need separate connections, not one enclosing transaction.
 
 ## Deployment boundary
 

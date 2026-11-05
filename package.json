@@ -14,7 +14,10 @@
     "test": "pnpm db:up && turbo run test",
     "db:up": "docker compose up -d --wait postgres",
     "db:down": "docker compose down",
-    "db:logs": "docker compose logs -f postgres"
+    "db:logs": "docker compose logs -f postgres",
+    "db:generate": "pnpm --filter @creme/api db:generate",
+    "db:migrate": "pnpm --filter @creme/api... build && pnpm --filter @creme/api db:migrate",
+    "db:seed": "pnpm --filter @creme/api... build && pnpm --filter @creme/api db:seed"
   },
   "devDependencies": {
     "@jest/globals": "30.5.2",

@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted in [plan.md](../../plan.md#architecture-and-tooling); recorded 2026-11-05. Workspace and connectivity implemented; domain modules and migrations remain planned.
+Accepted in [plan.md](../../plan.md#architecture-and-tooling); recorded 2026-11-05. Workspace, connectivity, domain schema, migrations and seed are implemented. Business API modules remain planned.
 
 ## Context
 
@@ -12,7 +12,7 @@ Those are permitted alternatives, not evidence of a completed comparative evalua
 
 ## Decision
 
-Use pnpm/Turbo with `apps/api` (NestJS), `apps/web` (React/Vite) and `packages/contracts` (wire types only). Access PostgreSQL through Drizzle/node-postgres; use real migrations for the future domain schema.
+Use pnpm/Turbo with `apps/api` (NestJS), `apps/web` (React/Vite) and `packages/contracts` (wire types only). Access PostgreSQL through Drizzle/node-postgres; version the domain schema with generated SQL migrations in `apps/api/drizzle`.
 
 ## Consequences
 

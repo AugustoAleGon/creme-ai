@@ -2,15 +2,15 @@
 
 ## Current system
 
-TypeScript workspace with NestJS, React/Vite, and PostgreSQL via Drizzle and node-postgres. Drizzle Kit is installed for planned migrations; domain schema, migrations and seed commands are not implemented.
+TypeScript workspace with NestJS, React/Vite, and PostgreSQL via Drizzle and node-postgres. Drizzle defines the domain schema; versioned SQL migrations and a repeat-safe seed command establish the take-home fixtures. Business endpoints remain unimplemented.
 
 | Layer | Manifest-pinned tools | Current responsibility |
 |---|---|---|
 | Workspace | pnpm 10.19.0, Turbo 2.11.10, TypeScript 5.9.3 | Coordinate packages, builds and checks. |
-| API | NestJS 12.3.3, Drizzle ORM 0.45.4, pg 8.23.1 | API/database health and managed database connectivity. |
+| API | NestJS 12.3.3, Drizzle ORM 0.45.4, pg 8.23.1 | API/database health, connectivity, schema and database CLI. |
 | Web | React 19.3.1, Vite 8.3.6 | Setup screen checking API health. |
-| Database | PostgreSQL 16 Alpine; Drizzle Kit 0.31.11 | Local database; migration workflow remains pending. |
-| Checks | Oxlint 1.91.0, Jest 30.5.2, Supertest 7.3.1, Vitest 5.1.0 | Static checks and setup tests. |
+| Database | PostgreSQL 16 Alpine; Drizzle Kit 0.31.11 | Local database with generated, versioned SQL migrations. |
+| Checks | Oxlint 1.91.0, Jest 30.5.2, Supertest 7.3.1, Vitest 5.1.0 | Static checks, setup tests and SQL/CLI database tests. |
 
 Versions describe repository manifests, not claims about the latest available releases.
 

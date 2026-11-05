@@ -2,7 +2,7 @@
 
 ## Current implementation scope
 
-This slice implements the initial setup: workspace/tooling, app shells, PostgreSQL Compose, Drizzle connectivity and smoke tests. Domain schema, seed data and business features remain planned for subsequent increments. Work directly on `main`; the user waived the review-size/chained-PR rule for this implementation. Do not create commits or publish without an explicit request.
+Initial setup is functionally verified. The current authorized increment is T1b: domain schema, versioned migrations, exact seed data and database-constraint tests. API business features and the readiness board remain deferred. Work directly on `main`; the user waived the review-size/chained-PR rule for this implementation. Do not create commits or publish without an explicit request.
 
 ## Architecture and tooling
 

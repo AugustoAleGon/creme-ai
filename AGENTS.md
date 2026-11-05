@@ -8,7 +8,7 @@ Worker document review, readiness and consular appointment scheduling for season
 - [Task log](odd/tasks/worker-operations.md) — original brief, acceptance scenarios and implementation progress.
 - [Business context](docs/business.md) — product purpose, actors and R1–R12 rules.
 - [Architecture](docs/architecture.md) — current stack, boundaries and planned behavior.
-- [Data model](docs/data-model.md) — planned entities and integrity rules; not an implemented schema.
+- [Data model](docs/data-model.md) — implemented schema, integrity constraints and remaining application rules.
 - [Infrastructure](docs/infrastructure.md) — local services, environment and data safety.
 - [ADR index](docs/adrs/README.md) — recorded decisions and their implementation status.
 - [ADR template](docs/adrs/adr-template.md) — format for future decisions.
@@ -22,17 +22,18 @@ Worker document review, readiness and consular appointment scheduling for season
 
 ```sh
 pnpm db:up
+pnpm db:seed
 pnpm dev
 pnpm test
 pnpm lint && pnpm typecheck
 pnpm build
 ```
 
-See README prerequisites first. Seed and migration commands do not exist yet.
+See README prerequisites first. `pnpm db:seed` migrates before seeding and never resets existing data.
 
 ## Non-obvious rules
 
-- Setup only is implemented. A planned feature is not permission to implement it; use the current request and `plan.md` for scope.
+- Setup and database foundation are implemented. A planned feature is not permission to implement it; use the current request and `plan.md` for scope.
 - The setup plan specifies `main`, with no commits or publication without an explicit request. Use Conventional Commits without AI attribution when commits are requested.
 - The full take-home targets four hours, with a five-hour hard stop; record incomplete work honestly rather than adding stretch goals.
 - Preserve external job-order identity and historical worker identity. The case system owns job orders; workers outlive a season (R1).
@@ -40,7 +41,7 @@ See README prerequisites first. Seed and migration commands do not exist yet.
 
 ## Testing
 
-`pnpm test` starts PostgreSQL and runs API Jest/Supertest integration tests plus web Vitest/Testing Library tests. API tests use a dedicated `_test` database; never substitute the development database. Current smoke tests do not prove the planned domain rules. See [test safety](docs/infrastructure.md#test-safety).
+`pnpm test` starts PostgreSQL and runs API Jest/Supertest integration tests plus web Vitest/Testing Library tests. API tests use a dedicated `_test` database; never substitute the development database. Database-seam tests also create and drop their own random local databases. Current tests do not prove the planned HTTP domain rules. See [test safety](docs/infrastructure.md#test-safety).
 
 ## Code style
 
