@@ -18,6 +18,9 @@ Copy `.env.example` only on first setup; do not overwrite an existing `.env`.
 
 - Web: http://127.0.0.1:5173
 - API/database health: http://127.0.0.1:3001/api/health
+- Swagger UI: http://127.0.0.1:3001/api/docs (OpenAPI JSON: `/api/docs-json`)
+
+In Swagger, start with `GET /api/job-orders/{id}/readiness`, select **Try it out**, and use `JO-2026-0142` with `X-User-Id: u-pedro`. Document review uses `u-luis`; mobile submissions require the assigned worker's user ID. The caller header is a local demo selector, not production authentication. **POST requests execute real writes against the connected database.** Documentation and UI assets are served locally, including when the database is unavailable.
 - PostgreSQL: `127.0.0.1:54329`
 
 The web dev server proxies `/api` to Nest. Environment values are loaded from the root `.env`; only `VITE_`-prefixed values may be exposed by Vite. Never put database credentials in a `VITE_` variable. Default credentials are local-only examples, not deployment credentials. All listeners bind to loopback.
