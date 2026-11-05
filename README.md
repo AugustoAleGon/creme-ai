@@ -69,11 +69,3 @@ This is a local demonstration slice, not a production deployment. Authentication
 ## Readiness and booking
 
 Open the web app after seeding. Pedro can view JO-2026-0142 and schedule selected workers; Sofía demonstrates denied cross-branch access. Mixed selections return individual outcomes. See [board usage](docs/readiness-board.md) and [operations endpoints](docs/api-operations.md). `X-User-Id` is only a local demonstration selector, not production authentication.
-
-## Submission materials
-
-- [Decisions and four written answers](DECISIONS.md) — rule enforcement, trade-offs, assumptions, cuts and AI usage.
-- [Recording guide](docs/recording-guide.md) — suggested seven-minute demonstration; not an actual recording.
-- [Submission checklist](docs/submission-checklist.md) — remaining human review, commit and sharing steps.
-
-The seed does not reset an existing demo. Use a separate fresh database for the starting-state recording; never delete existing development data to recreate the fixture.
