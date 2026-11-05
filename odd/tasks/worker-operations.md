@@ -1,6 +1,6 @@
 # Worker operations slice
 
-Objective: implement the take-home in plan.md; current increment is database foundation (T1b). Branch: main.
+Objective: implement the take-home in plan.md; current increment is document submissions and independent QC (T2). Branch: main.
 Delivery: exception-ok for generated/cohesive slices; user authorized local reviewable commits on main, no publishing. Runner: Jest/Supertest with real PostgreSQL; React UI checks.
 
 ## Specs
@@ -217,10 +217,16 @@ Scope confirmed in conversation: T1b only — schema, migrations, exact seed, an
 
 Acceptance: versioned SQL migrations generated from Drizzle; all required domain tables and submission receipts; repeat-safe seed matching S4; constraints backing S2; root migration/seed commands and documentation. Tests must not reset development or shared test data.
 
+### S9 — Document workflow increment
+
+> all right let's start working with T2 and let's work on those.
+
+Scope: T2 only, implementing S2–S5 submission/QC/access/audit behavior at the agreed HTTP plus persisted-effects seam. T3 readiness and scheduling and the UI remain deferred.
+
 ## Tasks
 - T1 | S1, S7 | inline | functionally verified | Workspace/tooling, app shells, Compose, Drizzle connectivity and smoke tests; commit c14a2b1, native review explicitly declined for this candidate. Risk: item 5 (dependencies/environment).
 - T1b | S2–S4, S8 | inline | complete | Commit d0976c24df195dadfffdda439ef5c9f329defe4a. Domain schema, migrations, seed and database-seam tests; independent verification passed and native four-lens review acknowledged with no findings. No writer trigger: one dependent database unit. Risk: items 1, 4, 5 (migrations, repeat-safe seed concurrency, database tooling).
-- T2 | S2–S5 | inline | pending | Submissions, QC, permissions and audit with HTTP integration tests; commit pending. Risk: items 2, 4 (access/concurrency).
+- T2 | S2–S5, S9 | inline | complete; commit pending | Submissions, QC, permissions and audit with HTTP integration tests; commit pending. Risk: items 2, 4 (access/concurrency).
 - T3 | S2–S5 | inline | pending | Acceptance, employer decisions, readiness and scheduling with concurrency tests; commit pending. Risk: items 2, 4 (access/concurrency).
 - T4 | S3–S5 | delegated if parallel API/frontend surfaces are ready | pending | Readiness board with component tests; commit pending.
 - T5 | S1–S6 | inline plus independent verifier | pending | Final acceptance checks and submission documentation; commit pending.
@@ -345,3 +351,31 @@ Assistant scoped continuation to T1b (schema, migrations, exact seed), main, no 
 - The final capture approved C2. Its exact acknowledgement completed with action=acknowledged and authority=burned for lineage review-eb635bf06510d154. The native lifecycle is closed; no outstanding review or correction remains for this candidate.
 - T1b is complete. T2–T5 remain pending and outside this increment. Review mode remains on; nothing was pushed or published.
 - This closure entry changes progress metadata only. Structural readback and whitespace checks cover the documentation-only follow-up; no runtime code changed after verification.
+
+### L15 — T2 authorized (2026-11-05)
+> all right let's start working with T2 and let's work on those.
+
+- Inline route: submissions, QC and their shared transaction protocol are dependent behavior; no parallel writer trigger. Follow RED/GREEN HTTP slices against unique local test databases.
+- Keep business writes and audit atomic under the job-order lock, with authorization before receipt replay. Independent verification follows for Risk items 2 and 4.
+- Forecast: approximately 800 authored lines including tests/docs. Existing size exception applies. No dependencies, migration changes, T3 or UI planned.
+
+### L16 — T2 document behavior and focused verification (2026-11-05)
+- Added two HTTP endpoints with boundary parsing, server-side access checks, shared order locks, immutable document versions, independent final QC and transactional audit. Existing migrations, dependencies and health endpoint remain unchanged.
+- RED observed: submissions returned 404; conflicting uploads returned conflict=false; QC route returned 404; rejection created no task. GREEN after each corresponding implementation. Supplemental authorization, validation, concurrency and rollback cases were added to the working slices; no separate RED is claimed for those.
+- Eight document HTTP tests pass against uniquely created local PostgreSQL databases. Cases include simultaneous replay, changed payload refusal, pending replacement, approved preservation, capture/submit independence, one final decision, fresh QC, task deduplication/resolution, scoped access, archive refusal, canonical replay and late audit-failure rollback.
+- No new validation dependency: the existing workspace has none, and these small string-map inputs use explicit boundary parsers. Normalization, QC-repeat behavior and task resolution semantics are documented in DECISIONS.md; receipts are technical metadata rather than separately audited domain records.
+- Root lint/typecheck pass. Full suite, build and independent Risk items 2/4 verification pending. T3 readiness assertions and all scheduling behavior remain deferred. No commits or publication in T2 yet.
+
+### L17 — Independent T2 verification (2026-11-05)
+- Fresh external scratch passed offline frozen install, lint, typecheck, build and all 21 tests. Independent HTTP probes passed caller/branch/worker scope, submitter/capturer independence, per-user and simultaneous cross-order keys, competing QC, version-order approved precedence and full-state hashes after refusals/audit failures.
+- Baseline 0b14b2a health suite passed 3/3; candidate and baseline returned identical healthy 200 and unavailable 503 bodies. No runtime blockers; original workspace unchanged by verification.
+- Corrected the verifier's documentation advisory: plan.md now identifies T2, not T1b, as the authorized increment. Promoted independent cross-order idempotency and approval-order probes into two permanent HTTP tests; other probes are already covered by the existing suite.
+- Parent spot check: root pnpm test passed all 23 tests (10 document, 8 database, 3 health, 2 web) after promoting the probes. Native review remains candidate-scoped and pending consent; no native approval or T2 commit claimed. Risk: items 2, 4 (authorization and concurrent document/receipt/QC transitions).
+
+### L18 — T2 native review completed (2026-11-05)
+> granted
+
+- Granted this T2 candidate only. Native risk, resilience, readability and reliability reviewers inspected the immutable candidate concurrently; all four returned no findings. No correction was required.
+- Exact acknowledgement completed with action=acknowledged and authority=burned for lineage review-47a00df4c99c9dae. The lifecycle is closed; do not replay its START, capture or acknowledgement commands.
+- The reviewed code and tests remain unchanged, backed by 23 passing tests and independent functional verification. This entry and task-status change are passive progress metadata, structurally checked after review closure.
+- T2 is complete and staged, but not committed. Commit authorization is separate from this review grant. T3–T5 remain deferred; no push, publication or review-mode change occurred.

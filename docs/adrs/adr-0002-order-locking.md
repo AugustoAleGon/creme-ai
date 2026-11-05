@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted design in [plan.md](../../plan.md#readiness-and-scheduling); recorded 2026-11-05. Not implemented or concurrency-tested.
+Accepted design in [plan.md](../../plan.md#readiness-and-scheduling); recorded 2026-11-05. Implemented for T2 submissions and QC with parallel-request HTTP tests. Appointment locking, readiness evaluation and capacity verification remain deferred.
 
 ## Context
 

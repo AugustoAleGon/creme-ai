@@ -2,7 +2,7 @@
 
 ## Current implementation scope
 
-Initial setup is functionally verified. The current authorized increment is T1b: domain schema, versioned migrations, exact seed data and database-constraint tests. API business features and the readiness board remain deferred. Work directly on `main`; the user waived the review-size/chained-PR rule for this implementation. Do not create commits or publish without an explicit request.
+Initial setup and T1b database foundation are complete. The current authorized increment is T2: document submissions, independent QC, permissions, correction tasks and transactional audit. T3 acceptance, employer decisions, readiness and scheduling, and the readiness board remain deferred. Work directly on `main`; the user waived the review-size/chained-PR rule for this implementation. Do not create commits or publish without an explicit request.
 
 ## Architecture and tooling
 

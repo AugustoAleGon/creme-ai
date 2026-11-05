@@ -1,6 +1,6 @@
 # Creme Operations
 
-The workspace, health-check path, domain schema, versioned migrations and exact take-home seed are implemented. Business endpoints and the readiness board are not implemented yet. See [plan.md](plan.md) for the full plan and [the task log](odd/tasks/worker-operations.md) for progress.
+The workspace, health-check path, domain schema, versioned migrations and exact take-home seed are implemented. Worker document submission and independent QC endpoints are implemented; readiness, scheduling and the board remain deferred. See [API behavior and decisions](DECISIONS.md). See [plan.md](plan.md) for the full plan and [the task log](odd/tasks/worker-operations.md) for progress.
 
 ## Quick start
 
@@ -55,10 +55,10 @@ Turbo caches builds/static checks; development and tests are uncached. Database 
 
 Compose initializes `creme` for development and `creme_test` for integration tests. API tests require `TEST_DATABASE_URL` with a database name ending in `_test`; they never fall back to the development URL. The health integration test executes SQL against real PostgreSQL through Drizzle. Web tests mock HTTP only to exercise presentation states.
 
-Database initialization runs only when the Docker volume is first created. If reusing an older volume without the test database, create `creme_test` explicitly; do not delete your volume to fix setup. Health tests remain read-only. Database foundation tests create random disposable `creme_<uuid>_test` databases on the local server, apply the real migration/seed CLI, and drop only their own databases. The test role needs `CREATEDB`; neither the development database nor the shared `_test` database is reset. These SQL/CLI tests do not yet prove API permissions, readiness or scheduling capacity.
+Database initialization runs only when the Docker volume is first created. If reusing an older volume without the test database, create `creme_test` explicitly; do not delete your volume to fix setup. Health tests remain read-only. Database foundation and document HTTP tests create random disposable `creme_<uuid>_test` databases on the local server, apply the real migration/seed CLI, and drop only their own databases. The test role needs `CREATEDB`; neither the development database nor the shared `_test` database is reset. Document HTTP tests cover permissions, idempotency, QC, correction tasks and transactional audit. Readiness and scheduling capacity remain unimplemented.
 
 Jest uses Node's experimental VM-module support to run the compiled ESM API tests; the associated warning is expected. Optional Watchman integration is disabled so the suite does not depend on a host Watchman installation. Some upstream dependencies report deprecation warnings during installation; the lockfile records the exact dependency graph.
 
 ## Current limits
 
-This is local development scaffolding, not a production deployment. Authentication is out of scope. Authorization, business audit/history enforcement, QC, readiness and concurrency-safe scheduling remain future increments. Database foreign keys, uniqueness and checks back the structural rules; they do not enforce every business rule. See [the data model](docs/data-model.md) for the boundary. No commits, remote repository or published deployment are created by the setup commands.
+This is local development scaffolding, not a production deployment. Authentication is out of scope. Document submission/QC authorization and transactional audit are implemented. Readiness and concurrency-safe scheduling remain future increments. Database foreign keys, uniqueness and checks back the structural rules; they do not enforce every business rule. See [the data model](docs/data-model.md) for the boundary. No commits, remote repository or published deployment are created by the setup commands.

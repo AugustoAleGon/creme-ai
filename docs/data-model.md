@@ -46,15 +46,15 @@ The seed contains Norte/Sur, five staff users with the specified roles, six matc
 
 Fixture dates, document numbers, file references and terms text are illustrative, not real personal records. The seed creates 18 document versions, 17 reviews and 93 bootstrap audit entries, including its completion marker.
 
-## Remaining application guarantees
+## Application guarantees and remaining scope
 
-| Rules | Still required in later API increments |
+| Rules | Current boundary |
 |---|---|
-| R2/R3 | No hard deletes, immutable document payloads, append-only audit behavior and transactionally audited state changes. Database-level audit triggers are an optional stretch, not implemented. |
-| R4–R7 | Independent reviewer checks, active-version selection, conflict detection, replay comparison/response, correction task routing and resolution. |
+| R2/R3 | Document endpoints preserve immutable payloads and final reviews, expose no deletes, and audit state changes transactionally. Database-level audit triggers are an optional stretch, not implemented. |
+| R4–R7 | Document endpoints implement independent QC, approved-version conflict comparison, replay responses and correction routing/resolution. The readiness projection is still deferred. |
 | R8/R9/R11 | Shared readiness evaluator; current-terms acceptance; server-side booking recheck; terms changes must not remove existing bookings. |
 | R10 | Order-then-appointment locks and capacity recheck. The unique booking index prevents duplicate active assignments, not over-capacity appointments by itself. |
-| R12 | Fail-closed caller, role, branch and worker-ownership checks. No PostgreSQL RLS or production authentication is claimed. |
+| R12 | Document endpoints implement fail-closed caller, role, branch and worker-ownership checks. No PostgreSQL RLS or production authentication is claimed. |
 
 Database-seam tests exercise real CLI migrations, exact fixtures, replay/concurrency, rollback and SQL constraints in isolated local databases. They do not substitute for the seven required HTTP business integration tests.
 

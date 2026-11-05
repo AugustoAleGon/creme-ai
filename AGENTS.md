@@ -33,7 +33,7 @@ See README prerequisites first. `pnpm db:seed` migrates before seeding and never
 
 ## Non-obvious rules
 
-- Setup and database foundation are implemented. A planned feature is not permission to implement it; use the current request and `plan.md` for scope.
+- Setup, database foundation and T2 document workflows are implemented. A planned feature is not permission to implement it; use the current request and `plan.md` for scope.
 - The setup plan specifies `main`, with no commits or publication without an explicit request. Use Conventional Commits without AI attribution when commits are requested.
 - The full take-home targets four hours, with a five-hour hard stop; record incomplete work honestly rather than adding stretch goals.
 - Preserve external job-order identity and historical worker identity. The case system owns job orders; workers outlive a season (R1).
@@ -41,7 +41,7 @@ See README prerequisites first. `pnpm db:seed` migrates before seeding and never
 
 ## Testing
 
-`pnpm test` starts PostgreSQL and runs API Jest/Supertest integration tests plus web Vitest/Testing Library tests. API tests use a dedicated `_test` database; never substitute the development database. Database-seam tests also create and drop their own random local databases. Current tests do not prove the planned HTTP domain rules. See [test safety](docs/infrastructure.md#test-safety).
+`pnpm test` starts PostgreSQL and runs API Jest/Supertest integration tests plus web Vitest/Testing Library tests. API tests use a dedicated `_test` database; never substitute the development database. Database-seam tests also create and drop their own random local databases. Document HTTP tests cover submissions/QC; readiness and scheduling rules remain deferred. See [test safety](docs/infrastructure.md#test-safety).
 
 ## Code style
 
@@ -51,4 +51,4 @@ TypeScript throughout; Oxlint checks lint separately from TypeScript typecheckin
 
 - Never commit `.env` or credentials; document new variables in `.env.example`.
 - Never log secrets or personal document data.
-- Local example credentials and `X-User-Id` caller selection are not production authentication. Authorization is planned, not implemented.
+- Local example credentials and `X-User-Id` caller selection are not production authentication. Document endpoints enforce roles, branch and ownership; this does not replace production authentication.
