@@ -27,6 +27,6 @@ export async function assignment(tx: Transaction, id: string) {
   if (!record) throw new NotFoundException('Record not found');
   return record;
 }
-export async function audit(tx: Transaction, actor: Caller, change: Omit<typeof auditLog.$inferInsert, 'actorId' | 'onBehalfOfUserId'>) {
-  await tx.insert(auditLog).values({ ...change, actorId: actor.id, onBehalfOfUserId: null });
+export async function audit(tx: Transaction, actor: Caller, change: Omit<typeof auditLog.$inferInsert, 'actorId' | 'onBehalfOfUserId'>, onBehalfOfUserId: string | null = null) {
+  await tx.insert(auditLog).values({ ...change, actorId: actor.id, onBehalfOfUserId });
 }

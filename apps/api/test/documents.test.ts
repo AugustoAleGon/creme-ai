@@ -154,6 +154,7 @@ describe('document workflow (R2–R7, R12)', () => {
       expect(response.body).toEqual({ statusCode: 403, error: 'Forbidden', message: 'Caller and required role are required' });
     }
     expect((await submit(submission, 'w-1')).status).toBe(404);
+    expect((await submit({ ...submission, rosterAssignmentId: 'RA-3' }, 'w-2')).status).toBe(404);
     expect((await submit({ ...submission, rosterAssignmentId: 'missing' })).status).toBe(404);
     for (const user of ['', 'missing', 'u-marta', 'w-1']) {
       expect((await review('DOC-w-2-passport-1', { decision: 'approve' }, user)).status).toBe(403);
