@@ -1,6 +1,6 @@
 # Worker operations slice
 
-Objective: implement the take-home in plan.md; current increment is document submissions and independent QC (T2). Branch: main.
+Objective: implement the take-home in plan.md; current increment is T5 final acceptance and local submission materials. Branch: main.
 Delivery: exception-ok for generated/cohesive slices; user authorized local reviewable commits on main, no publishing. Runner: Jest/Supertest with real PostgreSQL; React UI checks.
 
 ## Specs
@@ -223,13 +223,26 @@ Acceptance: versioned SQL migrations generated from Drizzle; all required domain
 
 Scope: T2 only, implementing S2–S5 submission/QC/access/audit behavior at the agreed HTTP plus persisted-effects seam. T3 readiness and scheduling and the UI remain deferred.
 
+### S10 — Parallel T3 and T4 increment
+
+> Can we paralellize this? I just have 2 hours to deliver.
+> Let's work on t3 and t4 in parallel
+
+Acceptance: implement the remaining four S3 endpoints with S2/S4/S5 behavior and the S3 readiness board. Preserve T2 behavior. Tests use the already-agreed HTTP/real-PostgreSQL and React interaction seams. T5 final submission materials remain separate, except documentation needed for these changes. No publication authorized.
+
+### S11 — Final acceptance and submission preparation
+
+> Review what is being implemented and let's work on the remaining
+
+Scope: verify S1–S6 against the completed slice, finish the seven required DECISIONS sections and four answers (at most 150 words each), correct stale documentation, tighten literal scenario assertions, and provide a recording guide. Preserve the user's main-only/no-publication boundary. Actual recording and private repository sharing require the user; do not invent them. No stretch goals or new dependencies.
+
 ## Tasks
 - T1 | S1, S7 | inline | functionally verified | Workspace/tooling, app shells, Compose, Drizzle connectivity and smoke tests; commit c14a2b1, native review explicitly declined for this candidate. Risk: item 5 (dependencies/environment).
 - T1b | S2–S4, S8 | inline | complete | Commit d0976c24df195dadfffdda439ef5c9f329defe4a. Domain schema, migrations, seed and database-seam tests; independent verification passed and native four-lens review acknowledged with no findings. No writer trigger: one dependent database unit. Risk: items 1, 4, 5 (migrations, repeat-safe seed concurrency, database tooling).
 - T2 | S2–S5, S9 | inline | complete | Commit 48d56036fc0f667a9004a1faf2d3dd91beee4919. Submissions, QC, permissions and audit with HTTP integration tests; independent verification passed and native review acknowledged with no findings. Risk: items 2, 4 (access/concurrency).
-- T3 | S2–S5 | inline | pending | Acceptance, employer decisions, readiness and scheduling with concurrency tests; commit pending. Risk: items 2, 4 (access/concurrency).
-- T4 | S3–S5 | delegated if parallel API/frontend surfaces are ready | pending | Readiness board with component tests; commit pending.
-- T5 | S1–S6 | inline plus independent verifier | pending | Final acceptance checks and submission documentation; commit pending.
+- T3 | S2–S5, S10 | delegated | complete | Commit faea7e44977404465947d4998f542552916d98d0: operations API, contracts, tests and usage docs. Risk: items 2, 4 (access/concurrency).
+- T4 | S3–S5, S10 | delegated | complete | Commit ffa7ee7fe3344f8f3c2e4601ac6f14e740b49758: readiness board, failure-message fix, tests and usage docs.
+- T5 | S1–S6, S11 | inline docs/tests; delegated clean-start verification | local materials verified; human delivery pending | Final39 tests and clean-start passed; decisions, four answers and recording guide complete. Actual recording/sharing remain pending; local materials are in the documentation commit containing L27.
 
 ## Log
 ### L4 — Setup-only scope and main branch (2026-11-05)
@@ -387,3 +400,65 @@ Assistant scoped continuation to T1b (schema, migrations, exact seed), main, no 
 - The two T2 business endpoints plus health exist. T3 still needs employer decisions, terms acceptance, four-gate readiness and concurrent partial-batch scheduling, with their integration tests. T4 still needs the staff readiness/booking board; the current web screen remains the health scaffold.
 - T5 still needs final acceptance/clean-start verification, completed DECISIONS.md and AI usage log, four written answers and the recording. Private repository sharing/publishing remains separately authorized work.
 - This documentation-only follow-up records the implementation commit and current gaps. Structural readback and whitespace checks apply; no runtime behavior changed. No push or publication.
+
+### L20 — Parallel T3/T4 authorized (2026-11-05)
+> Can we paralellize this? I just have 2 hours to deliver.
+> Let's work on t3 and t4 in parallel
+
+- Writer trigger: API and UI are independent implementation units after a parent-owned shared wire contract, with disjoint edit surfaces. Launch both together; parent owns contracts, integration, git and shared docs/task log. Each writer owns its behavior plus tests; no repository-wide formatters or installs.
+- Target remaining delivery window: approximately 20:12 UTC, inferred from the user's two-hour constraint at 18:12 UTC. Reserve final time for integration, independent security/concurrency verification and the user's recording. No stretch goals or new dependencies planned.
+- T3 reuses existing caller/order-lock/assignment/audit helpers and schema. T4 consumes the shared contract and uses HTTP fixtures until the API is ready. Both retain the existing HTTP health endpoint; the UI scaffold is intentionally replaced by the readiness board. Independent verifier follows T3 for Risk items 2/4 and any changed shared contract behavior.
+- Parent-added wire types have no runtime behavior; typecheck is the proportional check rather than an artificial RED. Writers must observe meaningful RED/GREEN at the previously agreed public seams. Existing size waiver remains; forecast approximately 1,000 authored lines across the two coherent units, not a hard limit.
+
+### L21 — Parallel writer handoff and parent readback (2026-11-05)
+- T3 writer implemented four operations endpoints, one readiness evaluator and order-locked booking. Initial RED showed missing routes; GREEN followed. Parent found the agreed worker-in-app guard missing; a focused RED reproduced verbal worker acceptance returning 200, then the guard returned 403 with unchanged history. Shared response types now constrain API output.
+- T3 checks: 10 operations tests, full API suite 31 tests, API lint/typecheck passed. T4 checks: 7 interaction tests, lint/typecheck/build passed; initial six board tests were RED against the replaced health scaffold. Both workers confirmed paths-injected skills and stayed within declared edit surfaces; no scratch, dependency changes, staging or commits by workers.
+- T4 invalidates stale GET/POST responses on caller switch and preserves confirmed outcomes across refresh failures. The parent updated integration docs; full root seam check, independent Risk2/3/4 verification and live-browser QA remain pending.
+
+### L22 — Integrated verification and browser QA (2026-11-05)
+- Root seam suite passed all 38 tests (31 API, 7 web). Independent verification in a fresh external scratch passed offline frozen install, lint, typecheck, build and all 38 tests; the baseline API suite passed 21 tests. Parent root lint spot check passed (cached results).
+- Independent HTTP/PostgreSQL probes passed role/branch/ownership/method/inactive refusals, full-state hashes after refused and repeated requests, employer history, represented-user audit, mixed batches, current-terms fail-closed behavior, last-seat races and cross-appointment duplicate prevention. No blockers or scope-expanding advisories were reported. Original workspace source remained unchanged by the verifier.
+- Real Chrome QA against an isolated local database confirmed six seeded workers and four readiness gates, mixed selection with two successful bookings and two explicit refusals, zero remaining capacity, branch-access refusal after switching caller, and persisted bookings after switching back. Desktop visual inspection passed; mobile visual QA was not performed.
+- Both QA servers stopped, the generated browser database was removed, and external verifier scratch was cleaned. No shared/development database reset or publication occurred.
+- T3/T4 implementation and functional verification are complete; native candidate consent/review and local commits remain pending. T5 final submission documentation, written answers and recording remain separate. Risk: items 2, 3, 4 (authorization, shared audit behavior and concurrent booking/UI response ordering).
+
+### L23 — T3/T4 native review closed (2026-11-05)
+> granted
+
+- The user granted review for this candidate only. All four native reviewers ran concurrently against immutable trees. Risk, resilience and readability reported no findings; reliability reported one non-blocking warning, R3-001. Native review approved without a correction transition.
+- R3-001 follow-up: if scheduling fails, then Retry refresh also fails, the UI can incorrectly say "Booking recorded, but readiness could not be refreshed." The reviewer recommends distinguishing confirmed booking responses from retained table data. This is separate later work, not a reopened review; no fix was applied in this candidate.
+- Exact acknowledgement completed for lineage review-abf962b88a89681e, target sha256:6889fa3d9469d72d18d2631e45ca78f029fe7e57f1b9abeebb56245f3f2d6b5e. Native output confirmed authority burned. No trailing review STATUS or duplicate review was run.
+- T3/T4 are implemented, functionally verified and reviewed. Code is unchanged from the reviewed candidate; this entry is passive closure metadata. Local commit authorization and T5 remain pending. No publication occurred.
+
+### L24 — Authorized booking-warning follow-up (2026-11-05)
+> Yes. Let's fix it
+
+- Fixed advisory R3-001 inline as a separate follow-up. Root cause: retaining readiness data was incorrectly treated as confirmation of a booking. Refresh now receives the appropriate failure-message context; retries preserve the preceding unconfirmed or confirmed result instead of inferring success from retained data.
+- Observed RED: the new public React interaction test failed after a rejected scheduling request and rejected readiness retry, with the false "Booking recorded" message present. GREEN: focused two-path checks and all eight web tests passed; web lint/typecheck passed. The confirmed-booking retry test preserves existing output; failed retries remain GET-only and retain the table without fabricated booking results.
+- Independent Risk item 3 verification used fresh external snapshots: original seven baseline tests passed, the new regression failed on the baseline, and all eight candidate tests plus lint/typecheck passed. Initial-load behavior and identity/abort guards remained unchanged. Parent regression spot check passed. All verifier scratch was removed.
+- Native assessment returned medium, review_due=false, under_budget for the changed candidate. The prior consumed review was not reopened; this follow-up has functional proof but no additional native review. No API, database, dependency or concurrency-control changes. No full API suite or live browser rerun for this message-only follow-up.
+- Updated board documentation. Commit and publication remain pending. Risk: item 3 (shared refresh helper also serves confirmed bookings and initial loading; independent differential verification passed).
+
+### L25 — T5 authorized and mapped (2026-11-05)
+> Review what is being implemented and let's work on the remaining
+
+- Read-only scope audit found all six endpoints, seven required integration behaviors and eight seed scenarios represented. No missing core runtime feature established. Two test assertions will be tightened to match literal worker ownership and refusal reasons.
+- T5 route: parent inline documentation and test-only assertions; a verifier handles the fresh-copy installation/build/full suite and clean-start CLI/runtime smoke because these are long checks of the large feature. No writer delegation reason applies to these dependent submission documents.
+- Finish DECISIONS.md (seven sections plus four answers of <=150 words), reconcile stale data-model/ADR/claims notes, and prepare a 5–8-minute recording guide. No AI-generated recording or remote publication will be claimed. Existing native review remains consumed; no runtime change planned.
+
+### L26 — T5 local delivery preparation verified (2026-11-05)
+- Completed DECISIONS.md with all seven required sections, explicit R1–R12 database/application boundaries, stack trade-offs and two evidenced AI mistakes. Four written answers contain 129, 125, 123 and 131 words, each below 150; they describe proposed integration/identity work rather than claiming it exists. The document is about 1,960 words including answers (page count depends on rendering).
+- Added docs/recording-guide.md with a suggested seven-minute walkthrough and docs/submission-checklist.md distinguishing local evidence from actual delivery. Corrected stale data-model, ADR, infrastructure and claims-ledger statements. No recording, hosting or publication was fabricated.
+- Tightened test-only assertions for the exact mixed-batch refusal reasons and w-2 submitting for RA-3. All 31 API tests passed. No artificial RED: existing behavior already satisfied these stronger acceptance assertions; no runtime implementation changed.
+- Independent frozen-source verification passed offline frozen install, root lint, typecheck, build and all 39 tests (31 API, 8 UI). Fresh test-owned database: root seed twice passed with identical complete public-table/audit hash, root dev started, HTML/direct/proxy health returned 200, direct/proxy readiness showed only RA-1/RA-6 ready and capacities2/1, and Sofia returned404. HTTP reads preserved seeded history. This final check was HTTP smoke, not new visual QA.
+- Verifier stopped its servers, confirmed ports3013/5183 closed and dropped its unique database. Parent removed retained external scratch including the private test environment; the development database and existing container were not reset. Original source/config/tests were unchanged by verification.
+- Local T5 materials and acceptance checks are complete. User-owned items remain: review the AI-assisted written submission, authorize local commits, make the actual5–8minute recording, and authorize private repository publication/sharing. No full feature completion or delivery is claimed before those steps.
+- Risk: none for T5 runtime behavior (test assertions and documentation only). Existing T3/T4 security/concurrency risks retain their prior independent proof.
+- Parent closure spot check: root typecheck passed; local Markdown links, seven section headings, answer word limits and whitespace checks passed. Final native assessment returned medium/under_budget with review_due=false; no extra native review was started. All intended changes are staged; unrelated skill/agent assets remain untracked and excluded.
+
+### L27 — Local work-unit commits authorized (2026-11-05)
+> Let's create the local commits
+
+- Created faea7e44977404465947d4998f542552916d98d0 (operations API, contracts, tests and usage docs) and ffa7ee7fe3344f8f3c2e4601ac6f14e740b49758 (board, failure-message fix, tests and usage docs), in that order on main. Revert UI first, then API if rolling back both; each unit carries its own behavior and checks. Existing size waiver applies to these cohesive units.
+- Both commits match the tested staged file trees byte-for-byte. Prior evidence remains 31 API and8 web tests plus clean-start checks; no functional rerun solely for committing unchanged bytes. Native committed-range assessments from c1053f7 returned medium/under_budget with no review due; initial missing untracked declaration was resolved with the explicit exclusion before proceeding.
+- This documentation commit closes local T5 materials and records implementation hashes. Actual recording, human review of written answers and private repository sharing remain user-owned. No push, branch creation, squash or AI attribution. Unrelated untracked agent/skill assets remain excluded.

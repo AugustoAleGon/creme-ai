@@ -2,7 +2,7 @@
 
 ## Current implementation scope
 
-Initial setup and T1b database foundation are complete. The current authorized increment is T2: document submissions, independent QC, permissions, correction tasks and transactional audit. T3 acceptance, employer decisions, readiness and scheduling, and the readiness board remain deferred. Work directly on `main`; the user waived the review-size/chained-PR rule for this implementation. Do not create commits or publish without an explicit request.
+T1–T4 are implemented and verified. The current authorized increment is T5: final acceptance checks, completed decisions and written answers, documentation reconciliation, and a recording guide. Actual recording and private repository sharing remain user-owned. Work directly on `main`; the user waived the review-size/chained-PR rule for this implementation. Do not create commits or publish without an explicit request.
 
 ## Architecture and tooling
 

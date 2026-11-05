@@ -2,13 +2,13 @@
 
 ## Status
 
-Accepted in [plan.md](../../plan.md#architecture-and-tooling); recorded 2026-11-05. Workspace, connectivity, domain schema, migrations and seed are implemented. Business API modules remain planned.
+Accepted in [plan.md](../../plan.md#architecture-and-tooling); recorded 2026-11-05. Workspace, connectivity, domain schema, migrations and seed are implemented. Business API modules and the readiness board are implemented.
 
 ## Context
 
 The take-home asks for one end-to-end slice under a four-to-five-hour timebox. It mandates TypeScript, React and PostgreSQL, while allowing backend-framework and ORM choices. The brief names NestJS, Fastify and Express as examples, and Vite or Next.js for React.
 
-Those are permitted alternatives, not evidence of a completed comparative evaluation. The plan selects NestJS, Vite and Drizzle; it does not record a detailed framework/ORM comparison.
+The delivered choice is NestJS, Vite and Drizzle. [DECISIONS.md](../../DECISIONS.md#1-data-model-and-stack) explains the trade-offs for this slice; no comparative benchmark is claimed.
 
 ## Decision
 
@@ -19,7 +19,7 @@ Use pnpm/Turbo with `apps/api` (NestJS), `apps/web` (React/Vite) and `packages/c
 ### Easier
 
 - One workspace coordinates the API, UI and shared wire contracts.
-- The planned modular monolith keeps the requested slice within one backend.
+- The modular monolith keeps the requested slice within one backend.
 
 ### Harder
 
@@ -27,4 +27,4 @@ Use pnpm/Turbo with `apps/api` (NestJS), `apps/web` (React/Vite) and `packages/c
 - Build ordering must produce contracts before dependent applications.
 - ORM selection does not implement audit, retention or concurrency policies automatically.
 
-<!-- TODO: verify — record the original comparative rationale for Drizzle versus other persistence tools before writing the required DECISIONS.md section. -->
+Drizzle keeps SQL-shaped transactions and constraints visible while adding typed query construction. It does not replace runtime validation or database-design knowledge.

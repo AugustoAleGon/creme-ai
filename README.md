@@ -1,6 +1,6 @@
 # Creme Operations
 
-The workspace, health-check path, domain schema, versioned migrations and exact take-home seed are implemented. Worker document submission and independent QC endpoints are implemented; readiness, scheduling and the board remain deferred. See [API behavior and decisions](DECISIONS.md). See [plan.md](plan.md) for the full plan and [the task log](odd/tasks/worker-operations.md) for progress.
+The workspace, health-check path, domain schema, versioned migrations and exact take-home seed are implemented. All six business endpoints and the staff readiness/booking board are implemented. See [API behavior and decisions](DECISIONS.md). See [plan.md](plan.md) for the full plan and [the task log](odd/tasks/worker-operations.md) for progress.
 
 ## Quick start
 
@@ -46,7 +46,7 @@ The first seed requires empty domain tables. It creates the two branches, eleven
 ## Workspace
 
 - `apps/api`: NestJS with Drizzle and a managed `pg` pool. TypeScript compiles decorators and ESM before execution; no runtime transpilation of Nest decorators.
-- `apps/web`: React + Vite. The initial screen checks the real API/database connection.
+- `apps/web`: React + Vite. The readiness board shows the four gates, appointment capacity and per-worker booking outcomes.
 - `packages/contracts`: shared wire types only. Neither Nest nor Drizzle enters the browser dependency graph.
 
 Turbo caches builds/static checks; development and tests are uncached. Database commands run directly, never through a cache. Source configuration and `.env` changes invalidate affected cached tasks.
@@ -55,10 +55,22 @@ Turbo caches builds/static checks; development and tests are uncached. Database 
 
 Compose initializes `creme` for development and `creme_test` for integration tests. API tests require `TEST_DATABASE_URL` with a database name ending in `_test`; they never fall back to the development URL. The health integration test executes SQL against real PostgreSQL through Drizzle. Web tests mock HTTP only to exercise presentation states.
 
-Database initialization runs only when the Docker volume is first created. If reusing an older volume without the test database, create `creme_test` explicitly; do not delete your volume to fix setup. Health tests remain read-only. Database foundation and document HTTP tests create random disposable `creme_<uuid>_test` databases on the local server, apply the real migration/seed CLI, and drop only their own databases. The test role needs `CREATEDB`; neither the development database nor the shared `_test` database is reset. Document HTTP tests cover permissions, idempotency, QC, correction tasks and transactional audit. Readiness and scheduling capacity remain unimplemented.
+Database initialization runs only when the Docker volume is first created. If reusing an older volume without the test database, create `creme_test` explicitly; do not delete your volume to fix setup. Health tests remain read-only. Database foundation and document HTTP tests create random disposable `creme_<uuid>_test` databases on the local server, apply the real migration/seed CLI, and drop only their own databases. The test role needs `CREATEDB`; neither the development database nor the shared `_test` database is reset. Document HTTP tests cover permissions, idempotency, QC, correction tasks and transactional audit. Operations HTTP tests cover readiness, acceptance, mixed batches, booking races and capacity.
 
 Jest uses Node's experimental VM-module support to run the compiled ESM API tests; the associated warning is expected. Optional Watchman integration is disabled so the suite does not depend on a host Watchman installation. Some upstream dependencies report deprecation warnings during installation; the lockfile records the exact dependency graph.
 
 ## Current limits
 
-This is local development scaffolding, not a production deployment. Authentication is out of scope. Document submission/QC authorization and transactional audit are implemented. Readiness and concurrency-safe scheduling remain future increments. Database foreign keys, uniqueness and checks back the structural rules; they do not enforce every business rule. See [the data model](docs/data-model.md) for the boundary. No commits, remote repository or published deployment are created by the setup commands.
+This is a local demonstration slice, not a production deployment. Authentication is out of scope. All six endpoints enforce scoped access and transactional business writes. The staff board uses server-evaluated readiness and refreshed booking state. Submission write-up and written answers are in DECISIONS.md. The actual recording, private repository sharing and deployment remain separate. Database foreign keys, uniqueness and checks back the structural rules; they do not enforce every business rule. See [the data model](docs/data-model.md) for the boundary. No commits, remote repository or published deployment are created by the setup commands.
+
+## Readiness and booking
+
+Open the web app after seeding. Pedro can view JO-2026-0142 and schedule selected workers; Sofía demonstrates denied cross-branch access. Mixed selections return individual outcomes. See [board usage](docs/readiness-board.md) and [operations endpoints](docs/api-operations.md). `X-User-Id` is only a local demonstration selector, not production authentication.
+
+## Submission materials
+
+- [Decisions and four written answers](DECISIONS.md) — rule enforcement, trade-offs, assumptions, cuts and AI usage.
+- [Recording guide](docs/recording-guide.md) — suggested seven-minute demonstration; not an actual recording.
+- [Submission checklist](docs/submission-checklist.md) — remaining human review, commit and sharing steps.
+
+The seed does not reset an existing demo. Use a separate fresh database for the starting-state recording; never delete existing development data to recreate the fixture.

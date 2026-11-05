@@ -37,7 +37,7 @@ Turbo caches builds and static checks; development and tests are uncached. Datab
 - If an old volume lacks the test database, create that database explicitly; do not delete the volume as a setup repair.
 - Jest disables optional Watchman integration and runs with Node experimental VM modules.
 - Database foundation tests require a local host and `CREATEDB`, then create/drop only uniquely named test-owned databases. Shared test and development data are never reset.
-- The seed concurrency test runs separate CLI processes/connections. Later domain concurrency tests also need separate connections, not one enclosing transaction.
+- The seed concurrency test runs separate CLI processes/connections. Domain concurrency tests also use separate connections, not one enclosing transaction.
 
 ## Deployment boundary
 

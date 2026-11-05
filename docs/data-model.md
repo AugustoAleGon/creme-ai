@@ -4,7 +4,7 @@
 
 The 17-table Drizzle schema is in `apps/api/src/database/schema.ts`. The generated SQL migration, journal and snapshot live in `apps/api/drizzle`. Run `pnpm db:generate` after a schema change, review the SQL, then use `pnpm db:migrate` to apply it. Do not use schema synchronization.
 
-`pnpm db:seed` applies migrations first and initializes the exact take-home fixtures in one transaction. It never resets existing data. Business endpoints and their runtime checks remain unimplemented.
+`pnpm db:seed` applies migrations first and initializes the exact take-home fixtures in one transaction. It never resets existing data. All six business endpoints and their runtime checks are implemented; see DECISIONS.md for the database/application enforcement boundary.
 
 ## Tables and structural guarantees
 
@@ -51,12 +51,12 @@ Fixture dates, document numbers, file references and terms text are illustrative
 | Rules | Current boundary |
 |---|---|
 | R2/R3 | Document endpoints preserve immutable payloads and final reviews, expose no deletes, and audit state changes transactionally. Database-level audit triggers are an optional stretch, not implemented. |
-| R4–R7 | Document endpoints implement independent QC, approved-version conflict comparison, replay responses and correction routing/resolution. The readiness projection is still deferred. |
-| R8/R9/R11 | Shared readiness evaluator; current-terms acceptance; server-side booking recheck; terms changes must not remove existing bookings. |
-| R10 | Order-then-appointment locks and capacity recheck. The unique booking index prevents duplicate active assignments, not over-capacity appointments by itself. |
-| R12 | Document endpoints implement fail-closed caller, role, branch and worker-ownership checks. No PostgreSQL RLS or production authentication is claimed. |
+| R4–R7 | Document endpoints implement independent QC, approved-version conflict comparison, replay responses and correction routing/resolution. The operations readiness evaluator preserves approved-version precedence. |
+| R8/R9/R11 | Implemented shared readiness evaluator, current-terms gate and server-side booking recheck. Historical acceptances/bookings remain intact across terms changes. |
+| R10 | Implemented order-then-appointment locks and capacity recheck. The unique booking index prevents duplicate active assignments, not over-capacity appointments by itself. |
+| R12 | All business endpoints implement fail-closed caller, role, branch and worker-ownership checks. No PostgreSQL RLS or production authentication is claimed. |
 
-Database-seam tests exercise real CLI migrations, exact fixtures, replay/concurrency, rollback and SQL constraints in isolated local databases. They do not substitute for the seven required HTTP business integration tests.
+Database-seam tests exercise real CLI migrations, exact fixtures, replay/concurrency, rollback and SQL constraints in isolated local databases. The document and operations HTTP suites separately cover the seven required business behaviors against real PostgreSQL.
 
 ## References
 
