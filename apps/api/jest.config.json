@@ -1,0 +1,7 @@
+{
+  "testEnvironment": "node",
+  "testMatch": ["<rootDir>/.test-dist/test/**/*.test.js"],
+  "transform": {},
+  "watchman": false,
+  "testTimeout": 10000
+}

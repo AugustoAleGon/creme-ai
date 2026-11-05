@@ -1,0 +1,31 @@
+{
+  "name": "@creme/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsc-watch -p tsconfig.json --onSuccess \"node --env-file-if-exists=../../.env dist/main.js\"",
+    "build": "tsc -p tsconfig.json",
+    "start": "node --env-file-if-exists=../../.env dist/main.js",
+    "lint": "oxlint . --deny-warnings",
+    "typecheck": "tsc -p tsconfig.test.json --noEmit",
+    "test": "tsc -p tsconfig.test.json && node --env-file-if-exists=../../.env --experimental-vm-modules ../../node_modules/jest/bin/jest.js --config jest.config.json --runInBand"
+  },
+  "dependencies": {
+    "@creme/contracts": "workspace:*",
+    "@nestjs/common": "12.3.3",
+    "@nestjs/core": "12.3.3",
+    "@nestjs/platform-express": "12.3.3",
+    "drizzle-orm": "0.45.4",
+    "pg": "8.23.1",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "@types/pg": "8.23.1",
+    "@types/supertest": "7.2.1",
+    "drizzle-kit": "0.31.11",
+    "supertest": "7.3.1",
+    "tsc-watch": "7.2.1"
+  }
+}
