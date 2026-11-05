@@ -219,7 +219,7 @@ Acceptance: versioned SQL migrations generated from Drizzle; all required domain
 
 ## Tasks
 - T1 | S1, S7 | inline | functionally verified | Workspace/tooling, app shells, Compose, Drizzle connectivity and smoke tests; commit c14a2b1, native review explicitly declined for this candidate. Risk: item 5 (dependencies/environment).
-- T1b | S2–S4, S8 | inline | functionally verified; native review pending | Domain schema, migrations, seed and database-seam tests. No writer trigger: one dependent database unit. Independent verification required. Risk: items 1, 4, 5 (migrations, repeat-safe seed concurrency, database tooling).
+- T1b | S2–S4, S8 | inline | complete | Commit d0976c24df195dadfffdda439ef5c9f329defe4a. Domain schema, migrations, seed and database-seam tests; independent verification passed and native four-lens review acknowledged with no findings. No writer trigger: one dependent database unit. Risk: items 1, 4, 5 (migrations, repeat-safe seed concurrency, database tooling).
 - T2 | S2–S5 | inline | pending | Submissions, QC, permissions and audit with HTTP integration tests; commit pending. Risk: items 2, 4 (access/concurrency).
 - T3 | S2–S5 | inline | pending | Acceptance, employer decisions, readiness and scheduling with concurrency tests; commit pending. Risk: items 2, 4 (access/concurrency).
 - T4 | S3–S5 | delegated if parallel API/frontend surfaces are ready | pending | Readiness board with component tests; commit pending.
@@ -336,3 +336,12 @@ Assistant scoped continuation to T1b (schema, migrations, exact seed), main, no 
 - Next delivery/review boundary is c14a2b15f31f45919076d057205efc9487991bd9 (C1 declined, not reviewed). C2 contains only database foundation plus its corresponding tests, commands and docs; setup is excluded from C2's committed range.
 - C2 commit message: feat(db): add versioned schema and repeat-safe seed. Existing independent database verification remains applicable: source behavior is unchanged from L9. Final root tests are rerun before committing.
 - Final precommit root test run passed all 13 tests. The full whitespace diagnostic flags 103 inherited trailing-space lines, all inside the verbatim brief blockquotes (including Markdown hard breaks); preserved as quoted requirements. Whitespace check passes for all other staged files. No code checks failed.
+
+### L14 — Database foundation review completed (2026-11-05)
+> granted
+
+- C2 is d0976c24df195dadfffdda439ef5c9f329defe4a, feat(db): add versioned schema and repeat-safe seed. Its committed review range excludes C1, which remains explicitly unreviewed.
+- Native risk, resilience, readability and reliability reviewers inspected the immutable C2 patches concurrently. All four reported no findings; no correction was needed. These static reviews do not replace the separately executed 13 passing tests and independent functional verification.
+- The final capture approved C2. Its exact acknowledgement completed with action=acknowledged and authority=burned for lineage review-eb635bf06510d154. The native lifecycle is closed; no outstanding review or correction remains for this candidate.
+- T1b is complete. T2–T5 remain pending and outside this increment. Review mode remains on; nothing was pushed or published.
+- This closure entry changes progress metadata only. Structural readback and whitespace checks cover the documentation-only follow-up; no runtime code changed after verification.
